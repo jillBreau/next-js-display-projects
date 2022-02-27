@@ -50,7 +50,7 @@ const ProjectPage = ({
 
 export const getStaticProps: GetStaticProps<{ entries: { num_of_records: number, feeds: Array<Feed> } }> = async ({ params }) => {
 
-  const response = await fetch(`https://pm25.lass-net.org/API-1.0.0/project/${params.project}/latest/`);
+  const response = await fetch(`https://pm25.lass-net.org/API-1.0.0/project/${params?.project}/latest/`);
   const data = await response.json();
   const { num_of_records, feeds } = data;
   const feedsReduced = feeds.slice(0, Math.min(10, feeds.length));
