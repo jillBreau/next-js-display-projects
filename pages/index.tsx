@@ -19,7 +19,6 @@ const Home = ({ projectNames }: { projectNames: Array<string>}) => {
         <div className={styles.grid}>
           {projectNamesDefined.map((projectName) => {
             return (
-              // TODO: investigate loading data faster And/or showing a loading animation
               <Link key={projectName} href={`/projects/${projectName}`}>
                 <a className={styles.card}>
                   <h2>{projectName}</h2>
