@@ -1,6 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import styles from '../../styles/Project.module.css';
 import Layout from '../../components/layout';
+import Date from '../../components/date';
 
 type Feed = {
   device_id: string,
@@ -34,7 +35,7 @@ const ProjectPage = ({
                     <li>{`Device ID: ${feed.device_id}`}</li>
                     <li>{`Latitude: ${feed.gps_lat}`}</li>
                     <li>{`Longitude: ${feed.gps_lon}`}</li>
-                    <li>{`Timestamp: ${feed.timestamp}`}</li>
+                    <li>{'Timestamp: '}<Date dateString={feed.timestamp} /></li>
                   </ul>
                 </li>
               )
