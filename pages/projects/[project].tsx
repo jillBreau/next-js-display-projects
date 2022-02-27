@@ -24,12 +24,12 @@ const ProjectPage = ({
 
       { !!feeds.length &&
         (
-          <>
+          <div>
           <p>{`${feeds.length === num_of_records ? 'Feed entries:' : `First ${feeds.length} feed entries:`}`}</p>
           <ol>
             {feeds.map((feed) => {
               return (
-                <li className={styles.item}>
+                <li key={`${feed.device_id} ${feed.timestamp}`} className={styles.item}>
                   <ul>
                     <li>{`Device ID: ${feed.device_id}`}</li>
                     <li>{`Latitude: ${feed.gps_lat}`}</li>
@@ -40,7 +40,7 @@ const ProjectPage = ({
               )
             })}
           </ol>
-          </>
+          </div>
         )
       }
       </div>

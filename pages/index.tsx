@@ -14,7 +14,7 @@ const Home = ({ projectNames }: { projectNames: Array<string>}) => {
         <div className={styles.grid}>
           {projectNames.map((projectName) => {
             return (
-              <Link href={`/projects/${projectName}`}>
+              <Link key={projectName} href={`/projects/${projectName}`}>
                 <a className={styles.card}>
                   <h2>{projectName}</h2>
                 </a>
