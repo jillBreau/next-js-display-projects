@@ -7,8 +7,15 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: flex-end;
+}
+
+.heroHome {
+  justify-content: flex-end;
+}
+
+.heroProject {
+  justify-content: space-between;
 }
 
 .back {
@@ -21,4 +28,5 @@
   margin: 10px;
   font-size: 3rem;
   color: white;
+  text-align: end;
 }

@@ -1,50 +1,43 @@
-import type { NextPage } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
+import { GetStaticProps } from 'next';
 import styles from '../styles/Home.module.css';
 import Layout from '../components/layout';
 
-const Home: NextPage = () => {
+const Home = ({ projectNames }: { projectNames: Array<string>}) => {
   return (
     <Layout home>
       <Head>
         <title>Display Projects</title>
       </Head>
       <main className={styles.main}>
-        <p className={styles.description}>
-          Get started
-        </p>
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {projectNames.map((projectName) => {
+            return (
+              <Link href={`/projects/${projectName}`}>
+                <a className={styles.card}>
+                  <h2>{projectName}</h2>
+                </a>
+              </Link>
+            )
+          })}
         </div>
       </main>
     </Layout>
   )
 }
 
-export default Home
+export const getStaticProps: GetStaticProps<{ projectNames: Array<string>}> = async () => {
+
+  const response = await fetch('https://pm25.lass-net.org/API-1.0.0/project/all/');
+  const data = await response.text();
+  const projectNames = data.split("\n").filter((projectName) => projectName.length);
+
+  return {
+    props: {
+      projectNames,
+    }
+  };
+};
+
+export default Home;

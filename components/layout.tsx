@@ -19,7 +19,7 @@ export default function Layout({
         />
       </Head>
       <header>
-        <div className={styles.hero}>
+        <div className={`${styles.hero} ${home ? styles.heroHome : styles.heroProject}`}>
           {!home && <h1 className={styles.back}>
             <Link href="/">
               <a>← Back to home</a>
