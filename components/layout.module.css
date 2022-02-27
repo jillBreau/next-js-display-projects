@@ -1,0 +1,24 @@
+.hero {
+  background-image: url("../public/hero-banner.png");
+  height: 35vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.back {
+  margin: 10px;
+  font-size: 2rem;
+  color: white;
+}
+
+.title {
+  margin: 10px;
+  font-size: 3rem;
+  color: white;
+}
