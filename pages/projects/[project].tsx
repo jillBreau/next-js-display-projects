@@ -15,14 +15,18 @@ const ProjectPage = ({
 }: {
   entries: { name: string, num_of_records: number, feeds: Array<Feed> }
 }) => {
-  const { name, num_of_records, feeds } = entries;
+
+  // TODO: Resolve Jest's "TypeError: Cannot read property 'map' of undefined"
+  // so this temporary const which is allowing the test suite to run can be removed
+  const entriesDefined = entries || {name: '', num_of_records: 0, feeds: []};
+
+  const { name, num_of_records, feeds } = entriesDefined;
   return (
     <Layout>
+      {/* TODO: improve styling */}
       <div className={styles.body}>
       <h1>{`Project name: ${name}`}</h1>
-
       <p>{`Number of feed entries: ${num_of_records}`}</p>
-
       { !!feeds.length &&
         (
           <div>
