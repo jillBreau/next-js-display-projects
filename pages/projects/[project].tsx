@@ -7,48 +7,50 @@ type Feed = {
   device_id: string,
   gps_lat: number,
   gps_lon: number,
-  timestamp: string
+  timestamp: string,
+}
+
+type Entries = {
+  name: string,
+  num_of_records: number,
+  feeds: Array<Feed>,
 }
 
 const ProjectPage = ({
   entries
 }: {
-  entries: { name: string, num_of_records: number, feeds: Array<Feed> }
+  entries: Entries,
 }) => {
-
-  // TODO: Resolve Jest's "TypeError: Cannot read property 'map' of undefined"
-  // so this temporary const which is allowing the test suite to run can be removed
-  const entriesDefined = entries || {name: '', num_of_records: 0, feeds: []};
-
-  const { name, num_of_records, feeds } = entriesDefined;
   return (
     <Layout>
       {/* TODO: improve styling */}
-      <div className={styles.body}>
-      <h1>{`Project name: ${name}`}</h1>
-      <p>{`Number of feed entries: ${num_of_records}`}</p>
-      { !!feeds.length &&
-        (
-          <div>
-          <p>{`${feeds.length === num_of_records ? 'Feed entries:' : `First ${feeds.length} feed entries:`}`}</p>
-          <ol>
-            {feeds.map((feed) => {
-              return (
-                <li key={`${feed.device_id} ${feed.timestamp}`} className={styles.item}>
-                  <ul>
-                    <li>{`Device ID: ${feed.device_id}`}</li>
-                    <li>{`Latitude: ${feed.gps_lat}`}</li>
-                    <li>{`Longitude: ${feed.gps_lon}`}</li>
-                    <li>{'Timestamp: '}<Date dateString={feed.timestamp} /></li>
-                  </ul>
-                </li>
-              )
-            })}
-          </ol>
-          </div>
-        )
+      {!!entries
+        && (<div className={styles.body}>
+          <h1>{`Project name: ${entries.name}`}</h1>
+          <p>{`Number of feed entries: ${entries.num_of_records}`}</p>
+          { !!(entries.feeds && entries.feeds.length) &&
+            (
+              <div>
+              <p>{`${entries.feeds.length === entries.num_of_records ? 'Feed entries:' : `First ${entries.feeds.length} feed entries:`}`}</p>
+              <ol>
+                {entries.feeds.map((feed) => {
+                  return (
+                    <li key={`${feed.device_id} ${feed.timestamp}`} className={styles.item}>
+                      <ul>
+                        <li>{`Device ID: ${feed.device_id}`}</li>
+                        <li>{`Latitude: ${feed.gps_lat}`}</li>
+                        <li>{`Longitude: ${feed.gps_lon}`}</li>
+                        <li>{'Timestamp: '}<Date dateString={feed.timestamp} /></li>
+                      </ul>
+                    </li>
+                  )
+                })}
+              </ol>
+              </div>
+            )
+          }
+        </div>)
       }
-      </div>
     </Layout>
   );
 };
