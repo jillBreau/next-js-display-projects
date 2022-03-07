@@ -1,25 +1,19 @@
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetStaticPaths } from 'next';
 import styles from '../../styles/Project.module.css';
 import Layout from '../../components/layout';
 import Date from '../../components/date';
+import { first10Entries } from '../../utils/dataTransformations';
+import { FC } from 'react';
+import { Entries } from '../../types/entries';
 
-type Feed = {
-  device_id: string,
-  gps_lat: number,
-  gps_lon: number,
-  timestamp: string,
+type Params = {
+	params: {
+		project: string
+	}
 }
 
-type Entries = {
-  name: string,
-  num_of_records: number,
-  feeds: Array<Feed>,
-}
-
-const ProjectPage = ({
+const ProjectPage: FC<{ entries: Entries }> = ({
   entries
-}: {
-  entries: Entries,
 }) => {
   return (
     <Layout>
@@ -55,17 +49,13 @@ const ProjectPage = ({
   );
 };
 
-export const getStaticProps: GetStaticProps<{ entries: { num_of_records: number, feeds: Array<Feed> } }> = async ({ params }) => {
+export const getStaticProps = async ({ params }: Params) => {
 
   const response = await fetch(`https://pm25.lass-net.org/API-1.0.0/project/${params?.project}/latest/`);
   const data = await response.json();
-  const { num_of_records, feeds } = data;
-  const feedsReduced = feeds.slice(0, Math.min(10, feeds.length));
-  const entries = {
-    name: params?.project,
-    num_of_records,
-    feeds: feedsReduced,
-  };
+  const { project } = params;
+
+  const entries = first10Entries(data, project);
 
   return {
     props: {
